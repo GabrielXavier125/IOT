@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de LEDs - Arduino</title>
+    <style>
+        body { font-family: Arial; text-align: center; margin-top: 50px; }
+        .container { display: inline-block; padding: 20px; border: 1px solid #ccc; border-radius: 10px; margin: 10px; }
+        button { font-size: 18px; padding: 10px 20px; margin: 5px; cursor: pointer; }
+        .on { background-color: #4CAF50; color: white; }
+        .off { background-color: #f44336; color: white; }
+        p.status { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Controle de LEDs com Arduino via Web</h1>
+
+    <div class="container">
+        <h2>LED 1 (Verde)</h2>
+        <button class="on" onclick="controlLed('1','on')">Ligar</button>
+        <button class="off" onclick="controlLed('1','off')">Desligar</button>
+        <p class="status" id="status1">OFF</p>
+    </div>
+
+    <div class="container">
+        <h2>LED 2 (Amarelo)</h2>
+        <button class="on" onclick="controlLed('2','on')">Ligar</button>
+        <button class="off" onclick="controlLed('2','off')">Desligar</button>
+        <p class="status" id="status2">OFF</p>
+    </div>
+
+    <div class="container">
+        <h2>LED 3 (Vermelho)</h2>
+        <button class="on" onclick="controlLed('3','on')">Ligar</button>
+        <button class="off" onclick="controlLed('3','off')">Desligar</button>
+        <p class="status" id="status3">OFF</p>
+    </div>
+
+    <script>
+        function controlLed(ledNum, action) {
+            fetch(`/control/${ledNum}/${action}`)
+                .then(res => res.json())
+                .then(data => {
+                    if(data.success){
+                        document.getElementById(`status${ledNum}`).innerText = action.toUpperCase();
+                    } else {
+                        alert(data.message);
+                    }
+                });
+        }
+
+        // Atualiza status periodicamente
+        setInterval(() => {
+            fetch('/status')
+                .then(res => res.json())
+                .then(data => {
+                    for(let led in data){
+                        document.getElementById(`status${led}`).innerText = data[led].toUpperCase();
+                    }
+                });
+        }, 1000);
+    </script>
+</body>
+</html>
