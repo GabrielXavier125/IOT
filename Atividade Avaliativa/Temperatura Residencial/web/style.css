@@ -1,0 +1,38 @@
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #0077ff, #00d4ff);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.container {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 300px;
+}
+
+h1 {
+  color: #333;
+}
+
+.painel {
+  margin-top: 20px;
+}
+
+#temp {
+  font-size: 48px;
+  font-weight: bold;
+  color: #0077ff;
+}
+
+#status {
+  margin-top: 15px;
+  font-size: 18px;
+  font-weight: bold;
+}
